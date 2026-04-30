@@ -59,6 +59,138 @@ personal-knowledge/
 
 ---
 
+## 环境搭建
+
+本章节介绍从零搭建 LLM Wiki 环境的完整步骤。
+
+### 前置要求
+
+| 工具 | 版本要求 | 用途 |
+|------|---------|------|
+| Node.js | >= 22 | 运行 qmd 搜索引擎 |
+| Git | 任意 | 版本管理 |
+| Claude Code | 最新版 | LLM Agent，维护 Wiki |
+| Obsidian | 最新版 | 浏览 Wiki（可选但强烈推荐） |
+
+### 搭建步骤
+
+#### 获取项目
+
+```bash
+# 如果项目已在 Git 远程仓库
+git clone <仓库地址> personal-knowledge
+cd personal-knowledge
+
+# 如果是全新项目
+mkdir personal-knowledge && cd personal-knowledge
+git init
+```
+
+#### 安装 qmd 搜索引擎
+
+qmd 是本地 Markdown 混合搜索引擎，支持 BM25 + 向量语义 + LLM 重排序。
+
+```bash
+# 全局安装
+npm install -g @tobilu/qmd
+
+# 验证安装
+qmd --version
+```
+
+**Windows 用户注意**：qmd 的启动脚本 `bin/qmd` 是 shell 脚本，Windows 下不直接兼容。需要手动创建启动器：
+
+```cmd
+:: 创建 D:\nvm-nodejs\qmd-node.cmd（路径取决于你的 Node.js 全局目录）
+@echo off
+node "D:\nvm-nodejs\node_modules\@tobilu\qmd\dist\cli\qmd.js" %*
+```
+
+之后用 `qmd-node` 代替 `qmd` 即可。
+
+#### 配置 qmd 集合
+
+```bash
+# 为 wiki 目录创建搜索集合
+qmd-node collection add "<项目绝对路径>/wiki" --name wiki
+
+# 添加上下文描述（提升搜索质量）
+qmd-node context add qmd://wiki "LLM Wiki 个人知识库"
+
+# 生成向量嵌入（首次需下载约 300MB 模型）
+qmd-node embed
+```
+
+嵌入模型下载可能较慢（从 HuggingFace），可设置镜像加速：
+
+```bash
+# Linux/macOS
+export HF_MIRROR=https://hf-mirror.com
+
+# Windows PowerShell
+$env:HF_MIRROR = "https://hf-mirror.com"
+
+# 然后重新运行
+qmd-node embed
+```
+
+#### 配置 MCP 服务器
+
+将 qmd 注册为 Claude Code 的 MCP 服务器，使 Claude Code 可以直接调用搜索功能。
+
+在项目目录创建 `.claude/settings.json`：
+
+```json
+{
+  "mcpServers": {
+    "qmd": {
+      "command": "node",
+      "args": [
+        "D:/nvm-nodejs/node_modules/@tobilu/qmd/dist/cli/qmd.js",
+        "mcp"
+      ]
+    }
+  }
+}
+```
+
+> **注意**：路径需替换为你实际的 Node.js 全局安装路径。Windows 用户必须使用 `node` 命令直接调用 `qmd.js`，而非 `qmd` shell 脚本。
+
+#### 配置 Obsidian（可选）
+
+1. 打开 Obsidian → 以文件夹打开仓库 → 选择 `personal-knowledge/`
+2. 设置 → 文件与链接 → 附件文件夹路径设为 `raw/assets/`
+3. 安装推荐插件：
+   - **Obsidian Web Clipper**：浏览器剪藏扩展
+   - **Dataview**：基于 frontmatter 运行查询
+
+#### 验证环境
+
+```bash
+# 验证 qmd
+qmd-node --version          # 应输出 qmd 2.x.x
+qmd-node status             # 应显示 wiki 集合信息
+
+# 验证 Git
+git log --oneline -1        # 应显示初始提交
+
+# 验证 MCP（在 Claude Code 中）
+# 重启 Claude Code 后，qmd MCP 工具会自动加载
+```
+
+### 首次使用后的常规操作
+
+```bash
+# 添加新资料到 wiki 后，更新搜索索引
+qmd-node update             # 重新扫描文件变更
+qmd-node embed              # 生成新文件的向量嵌入
+
+# 一行搞定
+qmd-node update && qmd-node embed
+```
+
+---
+
 ## 快速开始
 
 ### 初始化
