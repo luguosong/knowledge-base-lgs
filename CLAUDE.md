@@ -185,6 +185,29 @@ append-only，每条以固定前缀开头：
 - 修复了 3 处过时引用
 ```
 
+## 搜索工具：qmd
+
+Wiki 集成了 qmd（本地 Markdown 混合搜索引擎），当 index.md 不够用时用于精确搜索。
+
+- **CLI 命令**：`qmd-node`（Windows 兼容）
+- **MCP 服务器**：已配置在 `.claude/settings.json`，可通过 MCP 工具调用
+
+### 何时使用 qmd
+
+- Wiki 页面超过 50 个时，Query 操作优先用 qmd 搜索
+- 需要精确关键词匹配或语义搜索时
+- Lint 时用 qmd 发现孤立页面和缺失引用
+
+### 搜索工作流
+
+1. 优先使用 MCP 工具 `query` 进行混合搜索
+2. 如果 MCP 不可用，使用 CLI：`qmd-node query "查询内容"`
+3. 搜索结果结合 index.md 交叉验证
+
+### Ingest 后更新索引
+
+每次 ingest 后运行 `qmd-node update && qmd-node embed` 更新搜索索引。
+
 ## 重要规则
 
 - **raw/ 不可修改**：LLM 只能读取原始资料，永远不能修改或删除
@@ -194,3 +217,4 @@ append-only，每条以固定前缀开头：
 - **查询时优先读 Wiki**：不要从原始资料重新推导，直接使用 Wiki 中已整合的信息
 - **有价值的结果要回填**：查询产生的洞察应存入 `wiki/synthesis/`
 - **中文内容**：所有 Wiki 页面使用中文撰写，术语保留英文原文
+- **搜索工具**：Wiki 较大时用 qmd 搜索，ingest 后更新 qmd 索引

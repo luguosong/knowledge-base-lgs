@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "qmd": {
+      "command": "node",
+      "args": [
+        "D:/nvm-nodejs/node_modules/@tobilu/qmd/dist/cli/qmd.js",
+        "mcp"
+      ]
+    }
+  }
+}

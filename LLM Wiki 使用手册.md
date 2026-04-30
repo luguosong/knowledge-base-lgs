@@ -309,6 +309,129 @@ grep "2026-04-30" wiki/log.md
 
 ---
 
+## qmd 搜索引擎
+
+本项目已集成 [qmd](https://github.com/tobi/qmd)（Query Markdown）——一个 100% 本地运行的 Markdown 混合搜索引擎。当 Wiki 增长到一定规模后，`index.md` 手动索引不够用时，qmd 提供专业级的搜索能力。
+
+### 安装状态
+
+- **qmd 版本**：2.1.0
+- **执行命令**：`qmd-node`（Windows 兼容启动器，映射到 `node ... qmd.js`）
+- **Wiki 集合**：已配置，指向 `wiki/` 目录
+- **MCP 服务器**：已配置在 `.claude/settings.json`，Claude Code 可直接使用
+
+### Windows 注意事项
+
+qmd 的 `bin/qmd` 是 shell 脚本，Windows 下不兼容。使用以下替代命令：
+
+```bash
+# 方式一：使用 qmd-node 启动器（推荐）
+qmd-node <命令>
+
+# 方式二：直接用 node 执行
+node "D:/nvm-nodejs/node_modules/@tobilu/qmd/dist/cli/qmd.js" <命令>
+```
+
+### 搜索模式
+
+```mermaid
+graph LR
+    A[用户查询] --> B{搜索模式?}
+    B -->|关键词| C[search - BM25]
+    B -->|语义| D[vsearch - 向量]
+    B -->|混合| E[query - BM25+向量+重排序]
+```
+
+| 命令 | 模式 | 速度 | 质量 | 适用场景 |
+|------|------|------|------|---------|
+| `qmd-node search "关键词"` | BM25 全文 | 快 | 中 | 精确关键词匹配 |
+| `qmd-node vsearch "语义查询"` | 向量语义 | 中 | 高 | 自然语言描述 |
+| `qmd-node query "综合查询"` | 混合+重排序 | 慢 | 最佳 | 最重要的查询 |
+
+### 常用命令
+
+```bash
+# 关键词搜索
+qmd-node search "Transformer"
+qmd-node search "注意力机制" -c wiki
+
+# 语义搜索（需要先完成 embed）
+qmd-node vsearch "如何实现自注意力机制"
+
+# 混合搜索（最佳质量）
+qmd-node query "对比 RAG 和 LLM Wiki 的区别"
+
+# 更新索引（添加新资料后运行）
+qmd-node update
+
+# 重新生成向量嵌入
+qmd-node embed
+
+# 查看索引状态
+qmd-node status
+
+# 获取特定文档内容
+qmd-node get "concepts/注意力机制.md"
+```
+
+### 集合管理
+
+```bash
+# 查看所有集合
+qmd-node collection list
+
+# 添加新集合（如 raw/ 目录也想要搜索）
+qmd-node collection add "E:/code-note/other/personal-knowledge/raw" --name raw
+
+# 添加上下文描述（提升搜索质量）
+qmd-node context add qmd://wiki/entities "Wiki 中的实体页面"
+qmd-node context add qmd://wiki/concepts "Wiki 中的概念页面"
+```
+
+### 多语言支持
+
+默认的 `embeddinggemma-300M` 模型对中文支持有限。如果 Wiki 主要使用中文，建议切换到 Qwen3 Embedding：
+
+```bash
+# 设置中文 embedding 模型
+export QMD_EMBED_MODEL="hf:Qwen/Qwen3-Embedding-0.6B-GGUF/Qwen3-Embedding-0.6B-Q8_0.gguf"
+
+# 重新生成所有嵌入
+qmd-node embed -f
+```
+
+### 首次嵌入下载
+
+首次运行 `qmd-node embed` 时会自动下载 GGUF 模型到 `~/.cache/qmd/models/`：
+
+| 模型 | 用途 | 大小 |
+|------|------|------|
+| embeddinggemma-300M | 向量嵌入（默认） | ~300MB |
+| qwen3-reranker-0.6b | 重排序 | ~640MB |
+| qmd-query-expansion-1.7B | 查询扩展 | ~1.1GB |
+
+在中国网络环境下，HuggingFace 下载可能较慢。可设置镜像加速：
+
+```bash
+export HF_MIRROR=https://hf-mirror.com
+qmd-node embed
+```
+
+### MCP 集成
+
+qmd 已配置为 Claude Code 的 MCP 服务器。Claude Code 可以直接调用以下工具：
+
+| MCP 工具 | 功能 |
+|---------|------|
+| `query` | 混合搜索（BM25 + 向量 + 重排序） |
+| `get` | 按路径或 docid 获取文档 |
+| `multi_get` | 批量获取文档 |
+| `status` | 查看索引状态 |
+
+MCP 配置位于 `.claude/settings.json`。
+
+---
+
 ## 进阶技巧
 
 ### Git 版本管理
