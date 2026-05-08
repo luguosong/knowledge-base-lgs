@@ -81,13 +81,39 @@ wiki/
 
 ### Lint（检查）
 
-定期检查 Wiki 健康状况：
+定期检查 Wiki 健康状况。输出使用结构化格式，结果写入 `wiki/.lint-results.md`。
 
-- 页面间的矛盾或过时信息
-- 没有入链的孤立页面
-- 被提及但缺少独立页面的重要概念
-- 缺失的交叉引用
-- 可以通过网络搜索填补的知识空缺
+#### Lint 输出格式
+
+每个问题必须使用以下格式：
+
+````
+---LINT: 类型 | 严重度 | 简短标题---
+问题描述。
+PAGES: page1.md, page2.md
+---END LINT---
+````
+
+#### 检查项
+
+| 类型 | 严重度 | 说明 |
+|------|--------|------|
+| contradiction | warning | 两个或多个页面存在矛盾 |
+| stale | warning | 信息过时或被新资料取代 |
+| orphan | info | 没有入链的孤立页面 |
+| broken-link | warning | 指向不存在的页面的 wikilink |
+| missing-page | info | 被频繁引用但缺少独立页面的概念 |
+| missing-summary | warning | 页面缺少摘要段落（frontmatter 后到第一个 `##` 之间无正文） |
+| suggestion | info | 建议补充的来源或方向 |
+
+#### Lint 执行流程
+
+1. 读取 `wiki/.status.json` 中的 `page_hashes`，对比当前文件 hash 确定变化页面
+2. 优先检查有变化的页面
+3. 扫描所有页面执行结构化检查
+4. 将所有 `---LINT---` 结果写入 `wiki/.lint-results.md`
+5. 追加 `wiki/log.md` 记录本次 Lint
+6. 更新 `wiki/.status.json` 中的 `last_lint_at`
 
 ## 页面格式约定
 
