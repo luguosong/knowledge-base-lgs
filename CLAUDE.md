@@ -20,12 +20,14 @@ raw/
 └── assets/      # 图片和附件
 
 wiki/
-├── index.md     # 内容目录（分类索引，每次 ingest 后更新）
-├── log.md       # 时间线日志（append-only，记录所有操作）
-├── entities/    # 实体页面（人物、组织、项目等）
-├── concepts/    # 概念页面（技术概念、主题、理论等）
-├── sources/     # 来源摘要页面（每条资料一个摘要页）
-└── synthesis/   # 综合页面（对比分析、综述、发现等）
+├── index.md          # 内容目录（分类索引，每次 ingest 后更新）
+├── log.md            # 时间线日志（append-only，记录所有操作）
+├── .status.json      # 处理状态追踪（hash、已处理文件、页面映射）
+├── .lint-results.md  # 最近一次 Lint 结果（结构化格式）
+├── entities/         # 实体页面（人物、组织、项目等）
+├── concepts/         # 概念页面（技术概念、主题、理论等）
+├── sources/          # 来源摘要页面（每条资料一个摘要页）
+└── synthesis/        # 综合页面（对比分析、综述、发现等）
 ```
 
 ## 核心操作
@@ -266,36 +268,73 @@ append-only，每条以固定前缀开头：
 - 修复了 3 处过时引用
 ```
 
+## 处理状态（`wiki/.status.json`）
+
+记录每条 raw/ 资料的处理状态，用于增量处理和 hash 追踪。
+
+```json
+{
+  "version": 1,
+  "processed": {
+    "raw/路径/文件名.md": {
+      "ingested_at": "2026-04-30",
+      "raw_hash": "sha256-hash",
+      "source_page": "wiki/sources/对应摘要页.md",
+      "created_pages": [
+        "wiki/concepts/概念1.md",
+        "wiki/entities/实体1.md"
+      ],
+      "page_hashes": {
+        "wiki/concepts/概念1.md": "sha256-hash",
+        "wiki/entities/实体1.md": "sha256-hash"
+      },
+      "last_lint_at": null
+    }
+  }
+}
+```
+
+**Hash 计算**：使用 `sha256sum`（Git Bash 自带），在 Ingest 完成和 Lint 完成时更新。
+
+**用途**：
+- Ingest 前：对比 raw_hash 判断资料是否需要重新处理
+- Lint 前：对比 page_hashes 判断哪些页面被外部修改，优先检查
+
 ## 搜索工具：qmd
 
-Wiki 集成了 qmd（本地 Markdown 混合搜索引擎），当 index.md 不够用时用于精确搜索。
+Wiki 集成了 qmd（本地 Markdown 混合搜索引擎），用于精准检索 Wiki 内容。
 
 - **CLI 命令**：`qmd-node`（Windows 兼容）
 - **MCP 服务器**：已配置在 `.claude/settings.json`，可通过 MCP 工具调用
 
-### 何时使用 qmd
+### 使用优先级
 
-- Wiki 页面超过 50 个时，Query 操作优先用 qmd 搜索
-- 需要精确关键词匹配或语义搜索时
-- Lint 时用 qmd 发现孤立页面和缺失引用
+- Wiki 页面超过 20 个时，**所有 Query 操作必须优先使用 qmd 搜索**
+- 低于 20 个页面时，可直接读取 `index.md` 定位
 
 ### 搜索工作流
 
 1. 优先使用 MCP 工具 `query` 进行混合搜索
 2. 如果 MCP 不可用，使用 CLI：`qmd-node query "查询内容"`
-3. 搜索结果结合 index.md 交叉验证
+3. 搜索结果按聚合排序规则处理（见 Query 流程）
 
 ### Ingest 后更新索引
 
-每次 ingest 后运行 `qmd-node update && qmd-node embed` 更新搜索索引。
+每次 ingest 完成后**必须**运行：
+
+```bash
+qmd-node update && qmd-node embed
+```
 
 ## 重要规则
 
 - **raw/ 不可修改**：LLM 只能读取原始资料，永远不能修改或删除
 - **wiki/ 由 LLM 维护**：LLM 负责创建、更新、保持一致性，用户通过 Obsidian 浏览
 - **交叉引用使用 `[[wikilink]]`**：所有页面间引用使用 Obsidian 兼容的双链语法
-- **每次 ingest 更新 index.md 和 log.md**：保持索引和日志的最新状态
-- **查询时优先读 Wiki**：不要从原始资料重新推导，直接使用 Wiki 中已整合的信息
+- **每次 ingest 更新 index.md、log.md 和 .status.json**：保持索引、日志和处理状态的最新
+- **查询时优先用 qmd 搜索**：不要先读 index.md，先用 qmd 搜索，只读摘要判断相关性
 - **有价值的结果要回填**：查询产生的洞察应存入 `wiki/synthesis/`
 - **中文内容**：所有 Wiki 页面使用中文撰写，术语保留英文原文
-- **搜索工具**：Wiki 较大时用 qmd 搜索，ingest 后更新 qmd 索引
+- **页面必须有摘要**：所有新建/更新的 Wiki 页面必须包含 50-100 字的摘要段落
+- **hash 追踪**：ingest 和 lint 时通过 SHA-256 hash 检测文件变化，避免重复处理
+- **ingest 后更新搜索索引**：每次 ingest 完成后必须运行 `qmd-node update && qmd-node embed`
