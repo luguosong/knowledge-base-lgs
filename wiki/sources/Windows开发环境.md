@@ -6,6 +6,8 @@ tags: [windows, 开发环境]
 related_concepts: []
 ---
 
+聚焦 Windows 平台开发环境搭建，核心内容为 WSL 2 和 CMD 命令速查两部分。WSL 2 部分详解基于 Hyper-V 轻量虚拟机的架构原理、多发行版管理、文件系统互访（/mnt/c/ 与 \\wsl$）、NAT 与镜像网络模式、.wslconfig 和 wsl.conf 配置，以及 VS Code Remote-WSL 与 Docker Desktop 的集成方案。CMD 部分按八大类别整理内置命令速查，覆盖文件操作到系统修复的常用场景。
+
 ## 核心要点
 
 - WSL 2（Windows Subsystem for Linux）在 Windows 上直接运行真正的 Linux 内核，无需虚拟机或双系统

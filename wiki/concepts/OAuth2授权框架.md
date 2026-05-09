@@ -1,7 +1,7 @@
 ---
 title: OAuth2 授权框架
 tags: [oauth, 认证授权, 安全, Spring]
-sources: [[sources/OAuth2与OpenIDConnect]]
+sources: [[sources/OAuth2与OpenIDConnect]], [[sources/OAuth2官方规范索引]]
 ---
 
 ## 定义

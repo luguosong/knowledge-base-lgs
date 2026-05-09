@@ -13,38 +13,103 @@ description: 检查 LLM Wiki 知识库的健康状况。扫描所有 Wiki 页面
 
 不处理摄入（那是 `/ingest`）和查询（那是 `/query`）。
 
-## 执行流程
+## 前置检查
 
-**优先使用 Obsidian CLI**（`/obsidian-cli` skill）读取和搜索 Wiki 页面。Obsidian CLI 能直接与 Obsidian vault 交互，确保读取到最新内容。
+开始前检查工具链可用性并自动修复问题：
+
+```bash
+# 1. 检查 qmd
+qmd-node search "test" --files -n 1
+
+# 2. 检查 qmd 索引目录是否指向本项目 wiki/
+qmd-node collection show wiki
+
+# 3. 检查 scripts 是否存在
+ls .claude/skills/wiki-lint/scripts/
+```
+
+**qmd 索引路径不正确时，自动修复**：
+```bash
+# 移除旧集合，添加指向本项目 wiki/ 的新集合
+qmd-node collection remove wiki
+qmd-node collection add wiki "<项目根目录>/wiki"
+```
+修复后输出一条提示说明已自动修正。
+
+**qmd 完全不可用时**（命令执行失败），输出提示继续执行（lint 以脚本和 LLM 判断为主，不依赖 qmd）：
+```
+⚠️ qmd 搜索引擎不可用，跳过搜索相关检查。引用关系和内容检查不受影响。
+```
+
+## 执行流程
 
 ### 步骤 1：确定变化页面
 
-读取 `wiki/.status.json` 中的 `page_hashes`，对每个记录的页面计算当前 hash：
+读取 `wiki/.status.json` 中的 `page_hashes`，用辅助脚本检查变化：
+
 ```bash
-sha256sum wiki/concepts/*.md wiki/entities/*.md wiki/sources/*.md wiki/synthesis/*.md
+bash .claude/skills/wiki-lint/scripts/check-changes.sh wiki/
 ```
 
-对比记录的 hash，标记有变化的页面。这些页面优先检查。
+如果 status.json 为空或不存在，输出提示并跳过变化检测，直接执行全量检查。
 
-### 步骤 2：优先检查变化页面
+### 步骤 2：引用关系检查（orphan + broken-link + missing-page）
 
-对步骤 1 中发现的有变化的页面，逐页检查 7 项检查规则（见下方）。这些页面最可能有新引入的问题。
+用辅助脚本一次性完成三项检查：
 
-### 步骤 3：全量扫描
+```bash
+bash .claude/skills/wiki-lint/scripts/check-wikilinks.sh wiki/
+```
 
-扫描 `wiki/` 下所有页面（包括没有变化的页面），逐页执行 7 项检查。
+输出包含三个区域：
+- `=== BROKEN-LINK ===` → 指向不存在页面的 wikilink
+- `=== ORPHAN ===` → 存在但没有被引用的页面
+- `=== MISSING-PAGE ===` → 3+ 次引用但无对应文件
 
-扫描范围：
-- `wiki/concepts/`
-- `wiki/entities/`
-- `wiki/sources/`
-- `wiki/synthesis/`
+### 步骤 3：摘要完整性检查（missing-summary）
 
-不扫描 `wiki/index.md`、`wiki/log.md`、`wiki/.status.json`。
+用辅助脚本检查所有页面：
 
-### 步骤 4：写入 Lint 结果
+```bash
+bash .claude/skills/wiki-lint/scripts/check-missing-summary.sh wiki/
+```
 
-**优先使用 Obsidian CLI** 写入结果文件。将所有发现的问题写入 `wiki/.lint-results.md`，使用以下结构化格式：
+输出每行一个缺失摘要的文件名，最后显示 `TOTAL_MISSING: N`。
+
+### 步骤 4：内容矛盾检查（contradiction）
+
+对同名的概念/实体在不同页面中的描述进行交叉验证。搜索高频概念在不同页面的定义：
+
+```bash
+# 提取高频概念名
+grep -roh '\[\[[^]]*\]\]' wiki/ --include="*.md" | sed 's/\[\[//;s/\]\]//' | sort | uniq -c | sort -rn | head -10
+```
+
+读取排名靠前的概念在多个页面中的描述，检查是否矛盾。由于内容矛盾检查需要理解语义，这项检查由 LLM 人工判断，脚本只提供线索。
+
+### 步骤 5：过时信息检查（stale）
+
+对比来源摘要页的日期和概念页面的内容，看是否有更新的来源覆盖了旧信息。重点关注：
+- 技术版本号是否过时
+- 链接是否失效
+- 日期是否与内容不匹配
+
+### 步骤 6：补充建议（suggestion）
+
+检查哪些高频关联主题缺少综合分析页面：
+- 如果多个概念页面都提到某主题但没有 synthesis 页面，标记为建议补充
+
+### 步骤 6.5：处理 Review 队列
+
+读取 `wiki/.review-queue.md`，检查是否有 `状态: pending` 的条目：
+
+- 如果有，在 Lint 报告中列出所有 pending 条目，归类为 `review-pending`
+- 将 review 条目作为内容矛盾和过时信息的额外检查线索（补充步骤 4 和 5）
+- 不自动修改 review 状态，只报告
+
+### 步骤 7：写入 Lint 结果
+
+将所有发现的问题写入 `wiki/.lint-results.md`，使用以下结构化格式：
 
 ````
 ---LINT: 类型 | 严重度 | 简短标题---
@@ -61,59 +126,33 @@ PAGES: (none)
 ---END LINT---
 ```
 
-### 步骤 5：追加日志
+### 步骤 8：追加日志
 
-**优先使用 Obsidian CLI** 更新日志。在 `wiki/log.md` 末尾追加：
+在 `wiki/log.md` 末尾追加：
 ```markdown
 ## [YYYY-MM-DD] lint | Wiki 健康检查
 - 发现 X 个问题（Y 个 warning，Z 个 info）
 - [列出每个问题的简短标题]
 ```
 
-### 步骤 6：更新元数据
+### 步骤 9：更新元数据
 
 更新 `wiki/.status.json` 中每个记录条目的 `last_lint_at` 为当前日期。
 
 同时更新 `page_hashes` 为当前页面 hash（因为 Lint 检查已经计算过了）。
 
-## 检查项
+## 检查项速查
 
-按以下 7 项逐一检查每个页面：
-
-### contradiction（warning）
-两个或多个页面存在矛盾信息。例如概念 A 的定义在两个来源摘要中不一致。
-
-检查方法：关注同一概念/实体在不同页面中的描述是否矛盾。
-
-### stale（warning）
-信息过时或被新资料取代。例如某技术版本已更新但 Wiki 中仍记录旧版本。
-
-检查方法：对比来源摘要页的日期和概念页面的内容，看是否有更新的来源覆盖了旧信息。
-
-### orphan（info）
-没有入链的孤立页面——没有其他页面通过 `[[wikilink]]` 引用它。
-
-检查方法：在所有页面中搜索该页面的 wikilink，如果没有被引用则标记为 orphan。
-
-### broken-link（warning）
-指向不存在的页面的 wikilink。即 `[[xxx]]` 中的 xxx 对应的文件不存在。
-
-检查方法：提取所有 `[[wikilink]]` 引用，检查对应文件是否存在。
-
-### missing-page（info）
-被多个页面频繁引用但缺少独立页面。例如 3+ 个页面都引用了 `[[概念Z]]` 但 `wiki/concepts/概念Z.md` 不存在。
-
-检查方法：统计 wikilink 引用频率，高频引用但没有对应页面的标记出来。
-
-### missing-summary（warning）
-页面缺少摘要段落。frontmatter（`---`）之后到第一个 `##` 标题之间没有正文内容。
-
-检查方法：解析每个页面的 frontmatter 结束位置和第一个 `##` 出现位置，检查中间是否有正文。
-
-### suggestion（info）
-基于已有内容建议补充的方向。例如多个概念页面都提到了某个主题但没有综合分析。
-
-检查方法：发现主题关联但没有 synthesis 页面的情况。
+| 检查项 | 严重度 | 工具 | 说明 |
+|--------|--------|------|------|
+| contradiction | warning | LLM 判断 | 不同页面描述矛盾 |
+| stale | warning | LLM 判断 | 信息过时 |
+| missing-summary | warning | check-missing-summary.sh | 缺少摘要段落 |
+| broken-link | warning | check-wikilinks.sh | 指向不存在页面的链接 |
+| orphan | info | check-wikilinks.sh | 没有入链的孤立页面 |
+| missing-page | info | check-wikilinks.sh | 高频引用但缺少页面 |
+| suggestion | info | LLM 判断 | 建议创建 synthesis 页面 |
+| review-pending | info | .review-queue.md | 异步等待人工审核的条目 |
 
 ## 结果汇报
 

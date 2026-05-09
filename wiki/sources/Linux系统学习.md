@@ -6,6 +6,8 @@ tags: [linux, 操作系统, 系统管理, 网络服务, 系统编程]
 related_concepts: [[concepts/Linux文件系统]], [[concepts/Shell编程]], [[concepts/Linux网络服务]], [[concepts/Linux系统编程]]
 ---
 
+覆盖 Debian 和 Red Hat 两大发行版体系，从基础操作到系统编程的完整 Linux 学习资料。内容横跨九大子主题：文件系统与存储管理（LVM/RAID）、Shell 编程与文本处理（grep/sed/awk）、用户权限与系统管理（systemd/SELinux）、网络配置与服务器实战（DNS/Nginx/Apache/Postfix）、以及系统编程（进程/线程/IPC/epoll），兼顾理论基础和动手实践。
+
 ## 核心要点
 
 - 覆盖 **Debian**（Ubuntu/Debian）和 **Red Hat**（CentOS/RHEL/Fedora）两大发行版体系，包管理器分别对应 apt 和 yum/dnf

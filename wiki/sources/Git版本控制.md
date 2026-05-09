@@ -6,17 +6,35 @@ tags: [git, 版本控制]
 related_concepts: [[concepts/Git版本控制]]
 ---
 
+从 VCS 演进史出发，系统讲解 Git 分布式版本控制系统。内容涵盖三区域模型（工作目录-暂存区-本地仓库）、文件状态流转、分支机制（轻量指针的本质）、合并与 rebase 策略、内部原理（blob/tree/commit/tag 四种对象）、Git Hooks 自动化守卫，以及 Conventional Commits 等最佳实践。从基础配置到高级工具（cherry-pick、bisect、reflog）形成完整的 Git 知识体系。
+
 ## 核心要点
 
+- **VCS 演进**：本地 VCS → 集中式 VCS（CVS/SVN，中央服务器单点故障） → 分布式 VCS（Git/Mercurial，每人有完整仓库）
 - Git 是分布式版本控制系统，每台机器都有完整历史，采用快照（snapshot）而非差异（delta）存储
 - 核心三区域：工作目录 → 暂存区（Staging Area） → 本地仓库（.git）
+- 文件四种状态流转：Untracked → Staged → Unmodified → Modified → Staged
 - 分支本质是轻量指针（40 字节的 SHA 文件），创建/删除代价几乎为零
 - 合并策略：Fast-forward（快进）、三方合并（3-way merge）、squash merge
 - rebase 将分叉历史变为线性，但黄金法则是「已推送的历史不要重写」
 - 内部原理：四种对象（blob/tree/commit/tag）+ 引用系统 + packfile 压缩
 - Git 钩子（Hooks）实现自动化守卫，Husky 解决团队共享钩子配置
+- **安装配置**：三级配置系统（system/global/local），必配 user.name 和 user.email
 
 ## 详细摘要
+
+### VCS 演进史
+
+版本控制系统经历了三代演进：本地 VCS（只在本机）→ 集中式 VCS（CVS/Subversion，依赖中央服务器，宕机则全体停工）→ 分布式 VCS（Git/Mercurial，每台机器都是完整仓库镜像）。集中式的致命缺陷是单点故障——服务器硬盘损坏则历史全丢。
+
+### 安装与初始配置
+
+三级配置系统，更细的范围优先级更高：
+- `--system`（/etc/gitconfig）：系统所有用户
+- `--global`（~/.gitconfig）：当前用户所有仓库
+- `--local`（.git/config）：当前仓库（默认）
+
+必做配置：`user.name`、`user.email`、`init.defaultBranch main`。常用技巧包括命令别名（`alias.st status`）和换行符处理（`core.autocrlf`）。
 
 ### 核心哲学
 

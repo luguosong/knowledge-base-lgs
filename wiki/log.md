@@ -68,3 +68,44 @@
 - 将旧有页面（网络安全学习路线、渗透测试、Web安全漏洞、内网渗透、网络安全）纳入索引
 - 补全了 [[sources/网络安全学习路线]] 索引条目
 - 补全了 [[concepts/网络安全]]、[[concepts/渗透测试]]、[[concepts/Web安全漏洞]]、[[concepts/内网渗透]] 索引条目
+
+## [2026-05-09] ingest | Superpowers 技能框架 + Git 起步 + Linux 概述
+- 创建了 [[sources/Superpowers技能框架]]
+- 新增 [[entities/Superpowers]]
+- 更新了 [[sources/Git版本控制]]（补充 VCS 演进史、安装配置）
+- 处理了 raw/编程学习/专项研究/linux/00-Linux.md（导航页，无新内容，不更新 wiki）
+- 更新了 index.md 索引
+
+## [2026-05-09] lint | Wiki 健康检查
+- 发现 27 个问题（26 个 warning，1 个 info）
+- [missing-summary] 26 个概念/实体页面缺少摘要段落
+- [orphan] Harness架构层次图.excalidraw.md 未被引用且未在索引中
+- [suggestion] synthesis/ 目录为空，建议创建综合分析页面
+
+## [2026-05-09] ingest | gstack 工作流 + 文件路径迁移
+- 创建了 [[sources/gstack工作流]]
+- 新增 [[entities/gstack]]
+- 迁移了 Superpowers.md 路径（好用的扩展/ → 好用的扩展/开发工作流/）
+- 迁移了 网络安全学习路线路径（编程学习/ → 编程学习/学习路线/）
+- 更新了 index.md 索引
+
+## [2026-05-09] ingest | Harness架构详解 + LLM Wiki模式 + 新概念英语001课
+- 更新了 [[sources/UOCS-Harness架构]]（补充摘要段落和 sources 字段）
+- 创建了 [[sources/LLM-Wiki模式]]
+- 新增 [[entities/Andrej Karpathy]]
+- 新增 [[concepts/LLM Wiki模式]]
+- 创建了 [[sources/新概念英语第一册001课]]
+- 新增 [[entities/新概念英语]]
+- 更新了 index.md 索引
+
+## [2026-05-09] ingest | OAuth 2.0 官方规范索引
+- 创建了 [[sources/OAuth2官方规范索引]]
+- 新增 [[entities/Aaron Parecki]]
+- 更新了 [[concepts/OAuth2授权框架]]（补充 sources 引用）
+- 更新了 index.md 索引
+
+## [2026-05-09] lint | Wiki 健康检查
+- 发现 3 个问题（1 个 warning，2 个 info）
+- [missing-summary] 34 个页面缺少摘要段落（概念 20 + 实体 5 + 来源 9）
+- [orphan] Harness架构层次图.excalidraw.md 未被内容页面引用
+- [suggestion] synthesis/ 目录为空，建议创建综合分析页面

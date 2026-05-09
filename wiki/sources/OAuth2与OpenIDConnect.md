@@ -6,6 +6,8 @@ tags: [oauth, 认证授权, Spring]
 related_concepts: [[concepts/OAuth2授权框架]]
 ---
 
+从授权与认证的本质区别出发，系统讲解 OAuth2 授权框架和 OpenID Connect 认证层协议。内容涵盖四种角色模型、授权码流程与 PKCE 机制、JWT 令牌体系（三段式结构与关键声明验证）、OIDC 身份认证扩展，以及 Spring Authorization Server 的实战配置。最后梳理 OAuth 2.1 对 OAuth 2.0 的七大安全改进，形成从协议原理到 Java 工程实现的完整知识链路。
+
 ## 核心要点
 
 - OAuth2 是授权协议（回答「应用能访问哪些资源？」），OIDC 是认证层（回答「当前用户是谁？」）

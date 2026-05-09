@@ -7,6 +7,8 @@ related_entities: [[Anthropic]], [[GitHub]], [[智谱AI]]
 related_concepts: [[Agentic Loop]], [[MCP协议]], [[AI编程助手]]
 ---
 
+系统梳理了当前 AI 编程工具领域的四大代表性产品：Agent SDK、Claude Code、Copilot CLI 和实用 MCP 服务器。核心发现是所有工具都基于 Agentic Loop（思考-行动-观察循环）模式运作，MCP 协议已成为 AI 工具扩展的事实标准。资料涵盖架构原理、核心特性、扩展机制及三大厂商（Anthropic、GitHub、智谱 AI）的技术方案对比。
+
 ## 核心要点
 
 - AI 编程工具的核心是 **Agentic Loop**（代理循环）模式：思考 → 行动 → 观察 → 再思考，循环往复直到任务完成

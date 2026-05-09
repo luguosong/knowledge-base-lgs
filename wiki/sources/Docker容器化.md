@@ -6,6 +6,8 @@ tags: [docker, 容器化, DevOps]
 related_concepts: [[concepts/Docker容器化]]
 ---
 
+全面覆盖 Docker 容器化技术栈，从架构原理（client-server 模型、分层存储、Union File System）到生产实践（多阶段构建、安全扫描、资源限制）。内容包含核心三对象操作、Dockerfile 编写规范、Compose 多容器编排、Harbor 私有仓库部署、Trivy 镜像安全扫描，以及 GitHub Actions 和 Jenkins 的 CI/CD 流水线集成，形成从开发到生产的完整知识链路。
+
 ## 核心要点
 
 - Docker 采用 client-server 架构（CLI → Daemon → containerd → runc），通过 REST API 通信
