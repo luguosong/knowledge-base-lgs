@@ -113,3 +113,38 @@
 ## [2026-05-09] fix | 批量修复 missing-summary
 - 为 34 个页面添加了 50-100 字摘要段落（概念 20 + 实体 5 + 来源 9）
 - 验证通过：check-missing-summary.sh 返回 ALL_OK
+
+## [2025-07-10] ingest | 批量摄入 Java/前端/OAuth 学习笔记（58 个文件）
+
+### 处理重命名（hash 验证 + status.json 更新，无需创建 wiki 页面）
+- AI 目录重命名（`Ai/` → `AI/`）：批量添加 74 条新路径到 status.json，指向原有 [[sources/AI编程工具研究]]
+- 英语 001 路径迁移（`英语/新概念英语/第一册/001.md` → `英语/001.md`）：hash 验证一致，添加新路径映射
+- 黑客路线路径迁移（`学习路线/从零基础...` → `编程学习/从零基础...`）：hash 验证一致，添加新路径映射
+
+### 创建新 wiki 页面
+- 创建了 [[sources/Java-SE基础学习]]
+- 新增 [[concepts/Java-SE]]
+- 新增 [[concepts/Java-IO流]]
+- 创建了 [[sources/Maven构建工具]]
+- 新增 [[concepts/Maven]]
+- 创建了 [[sources/Java日志框架]]
+- 新增 [[concepts/Java日志框架]]
+- 创建了 [[sources/JDBC数据库访问]]
+- 新增 [[concepts/JDBC]]
+- 新增 [[concepts/数据库连接池]]
+- 创建了 [[sources/HTML基础学习]]
+- 新增 [[concepts/HTML]]
+- 创建了 [[sources/React前端框架]]（占位，笔记内容待完善）
+- 新增 [[concepts/React]]（占位）
+- 创建了 [[sources/RFC6749-OAuth2授权框架翻译]]（RFC 6749 中文全文翻译）
+- 更新了 index.md 索引（新增 8 条来源、9 条概念）
+
+## [2025-07-10] lint | Wiki 健康检查
+- 发现 5 个问题（1 个 warning，2 个 info，1 个 warning 修复，1 个 info 修复）
+- [broken-link/warning] .review-queue.md 模板注释中含伪链接（false positive，不修复）
+- [orphan/info] Harness架构层次图.excalidraw 预存在孤立（已知）
+- [orphan/info] overview.md 无入链（符合预期）
+- [self-ref-sources/warning] 8 个 source 页面 frontmatter 中有自引用 sources 字段 → **已修复**
+- [missing-source-ref/info] OAuth2授权框架缺少 RFC6749 来源引用 → **已修复**
+- [suggestion/info] synthesis/ 目录为空，建议创建 Java 技术栈综合页
+

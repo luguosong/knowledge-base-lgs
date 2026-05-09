@@ -1,7 +1,7 @@
 ---
 title: OAuth2 授权框架
 tags: [oauth, 认证授权, 安全, Spring]
-sources: [[sources/OAuth2与OpenIDConnect]], [[sources/OAuth2官方规范索引]]
+sources: [[sources/OAuth2与OpenIDConnect]], [[sources/OAuth2官方规范索引]], [[sources/RFC6749-OAuth2授权框架翻译]]
 ---
 
 OAuth2（RFC 6749）是行业标准的授权协议，核心思想是"令牌替代密码"，允许第三方应用在用户不暴露密码的情况下获取有限的资源访问权限。涵盖四种角色、多种授权流程（授权码/PKCE/客户端凭证/设备授权）、JWT 令牌体系、OpenID Connect 身份认证层，以及 OAuth 2.1 的安全演进和 Spring Authorization Server 实践。

@@ -5,7 +5,6 @@ type: note
 tags: [AI, Spring, 架构设计, Harness Engineering]
 related_entities: [[Spring Framework]]
 related_concepts: [[AI编程助手]]
-sources: [[sources/UOCS-Harness架构]]
 ---
 
 UOCS 项目基于 Harness Engineering 模式，以 Spring Boot 3.5.7 + Spring AI 1.1.2 为基础，构建了完整的 AI Agent 架构。核心包括 4 角色多模型架构、三层记忆系统（Session/Project/DrawingMemory）、五层上下文压缩管线、47 个工具（11 模块）、视觉记忆管线（Stage A/B/C）、WASM 硬件许可、以及意图驱动的统一 ReAct 执行循环。

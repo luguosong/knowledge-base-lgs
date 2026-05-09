@@ -19,6 +19,13 @@
 - [[sources/gstack工作流]] - Garry Tan 的 Claude Code 工作流，23 个专家角色 + 8 个工具，虚拟工程团队 Sprint 流程
 - [[sources/LLM-Wiki模式]] - Karpathy 提出的 LLM 增量构建个人知识库模式，三层架构 + 三个核心操作
 - [[sources/新概念英语第一册001课]] - 新概念英语第一册第001课 "Excuse me!"，一般疑问句、Excuse me/Pardon 多语境用法
+- [[sources/Java-SE基础学习]] - Java 概述、IO 流体系、文件操作（File/NIO.2）、JDK 8/11/17/21/25/26 更新日志
+- [[sources/Maven构建工具]] - Maven 安装配置、POM 详解、生命周期与插件、依赖管理、仓库与 Profile 多环境配置
+- [[sources/Java日志框架]] - JUL/JCL/SLF4J/Log4j/Log4j2/Logback 框架对比与选型，Spring Boot 日志集成
+- [[sources/JDBC数据库访问]] - JDBC 核心接口、PreparedStatement、事务管理、连接池、批处理、CLOB、最佳实践
+- [[sources/HTML基础学习]] - HTML 文档结构、语义化标签、表单、表格、媒体、超链接、字符实体完整学习笔记
+- [[sources/React前端框架]] - React 基础、路由（React Router）、全局状态管理（MobX）学习笔记（当前为占位阶段）
+- [[sources/RFC6749-OAuth2授权框架翻译]] - RFC 6749《OAuth 2.0 授权框架》中文翻译，四种角色、四种授权类型、协议流程
 
 ## 实体
 
@@ -56,6 +63,14 @@
 - [[concepts/Web安全漏洞]] - Web 应用常见安全漏洞（SQL 注入、XSS、CSRF 等）
 - [[concepts/内网渗透]] - 内部网络渗透测试技术与防御策略
 - [[concepts/LLM Wiki模式]] - 使用 LLM 增量构建个人知识库的架构模式（Karpathy 提出），知识编译一次持续更新
+- [[concepts/Java-SE]] - Java Standard Edition 核心 API 体系，JVM 跨平台机制，JDK LTS 版本演进
+- [[concepts/Java-IO流]] - Java IO 字节流/字符流体系、装饰者模式、NIO.2 文件操作 API（Path/Files/WatchService）
+- [[concepts/Maven]] - Java 项目构建工具，约定优于配置，POM 坐标系统，三层仓库，生命周期与插件
+- [[concepts/Java日志框架]] - 门面模式日志体系（SLF4J/JCL 门面 + Logback/Log4j2/JUL 实现），Spring Boot 集成
+- [[concepts/JDBC]] - Java 数据库连接标准 API，统一屏蔽多数据库差异，PreparedStatement 防注入
+- [[concepts/数据库连接池]] - HikariCP/Druid 连接池原理与配置，DataSource 接口，生产环境连接管理
+- [[concepts/HTML]] - 超文本标记语言，网页结构定义，语义化标签，表单验证，可访问性基础
+- [[concepts/React]] - Meta 开源 UI 库，组件化+虚拟 DOM，Hooks 函数式组件（当前知识库为占位阶段）
 
 ## 综合
 
@@ -63,5 +78,5 @@
 
 ---
 
-*最后更新：2026-05-09*
-*页面总数：46*
+*最后更新：2025-07-10*
+*页面总数：58*
