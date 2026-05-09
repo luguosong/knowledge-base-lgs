@@ -4,6 +4,8 @@ tags: [linux, 网络服务, nginx, ssh, dns, 邮件服务器]
 sources: [[sources/Linux系统学习]]
 ---
 
+Linux 网络服务涵盖在 Linux 系统上部署运行的各类网络应用，包括 OpenSSH 远程管理、Nginx/Apache Web 服务、BIND DNS 解析、Postfix+Dovecot 邮件服务、NFS/Samba 文件共享等。Linux 凭借稳定性和开源生态成为互联网服务器的主流操作系统，防火墙（iptables/firewalld）和诊断工具是运维必备能力。
+
 ## 定义
 
 Linux 网络服务是指在 Linux 系统上部署和运行的各种网络应用服务，涵盖远程管理、Web 服务、域名解析、邮件收发、文件共享等。Linux 凭借其稳定性、安全性和开源生态，是互联网服务器的主流操作系统。

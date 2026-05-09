@@ -3,7 +3,8 @@ title: Bouncy Castle
 type: project
 tags: [密码学, Java, 加密库, 开源]
 sources: "[[sources/密码学体系学习]]"
----
+
+Bouncy Castle 是 Java/C# 平台上最重要的开源密码学库，作为 JCA Provider 提供丰富的加密算法实现。在后量子密码（ML-KEM、ML-DSA）、OpenPGP、CMS/S/MIME 等领域是 Java 生态中唯一成熟的实现方案。本知识库密码学体系学习笔记大量使用 Bouncy Castle 作为代码示例基础。
 
 # Bouncy Castle
 

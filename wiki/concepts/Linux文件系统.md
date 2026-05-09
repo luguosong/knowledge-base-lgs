@@ -4,6 +4,8 @@ tags: [linux, 文件系统, 存储, LVM, RAID]
 sources: [[sources/Linux系统学习]]
 ---
 
+Linux 文件系统是操作系统组织、存储和检索磁盘数据的核心机制，涵盖 FHS 目录层次结构、inode/superblock 元数据管理、ext4/XFS/Btrfs 等具体实现。LVM 逻辑卷管理提供在线扩容和快照能力，RAID 磁盘阵列实现数据冗余与性能优化，磁盘配额机制限制用户资源使用。
+
 ## 定义
 
 Linux 文件系统是操作系统用于组织、存储和检索磁盘数据的核心机制。它定义了文件在存储设备上的布局方式，包括目录层次结构（FHS）、元数据管理（inode/superblock）、以及具体的文件系统实现（ext4、XFS、Btrfs 等）。

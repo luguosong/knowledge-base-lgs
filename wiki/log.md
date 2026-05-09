@@ -109,3 +109,7 @@
 - [missing-summary] 34 个页面缺少摘要段落（概念 20 + 实体 5 + 来源 9）
 - [orphan] Harness架构层次图.excalidraw.md 未被内容页面引用
 - [suggestion] synthesis/ 目录为空，建议创建综合分析页面
+
+## [2026-05-09] fix | 批量修复 missing-summary
+- 为 34 个页面添加了 50-100 字摘要段落（概念 20 + 实体 5 + 来源 9）
+- 验证通过：check-missing-summary.sh 返回 ALL_OK

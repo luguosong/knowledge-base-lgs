@@ -5,6 +5,8 @@ tags: [AI公司, Claude, 安全]
 sources: [[sources/AI编程工具研究]]
 ---
 
+Anthropic 是 2021 年由 Dario Amodei 等创立的美国 AI 安全公司，核心产品包括 Claude 系列大语言模型（Opus/Sonnet/Haiku）、终端编程助手 Claude Code 和 Agent SDK。公司发起了 MCP 协议（Model Context Protocol），在 AI 编程工具生态中具有深远影响，与本知识库中 AI 编程工具研究主题紧密关联。
+
 ## 概述
 
 Anthropic 是一家专注于 AI 安全的美国科技公司，由 Dario Amodei 和 Daniela Amodei 等人于 2021 年创立。公司以 "AI 安全" 为核心使命，开发了 Claude 系列大语言模型和相关产品。Anthropic 在 AI 编程工具领域具有重要影响力，推出了 Claude Code 终端助手和 Agent SDK，同时也是 [[MCP协议]] 的发起者。

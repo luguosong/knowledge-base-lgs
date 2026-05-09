@@ -4,6 +4,8 @@ tags: [docker, 容器化, DevOps]
 sources: [[sources/Docker容器化]]
 ---
 
+Docker 容器化是基于 Linux 内核 cgroup 和 namespace 机制的轻量级虚拟化技术，将应用及其依赖打包为标准化容器运行。其分层镜像架构带来空间效率和构建加速优势，配合 Docker Compose 实现多服务编排，通过 CI/CD 集成实现自动化构建部署，是企业级 DevOps 的核心基础设施。
+
 ## 定义
 
 Docker 容器化是一种轻量级虚拟化技术，通过 Linux 内核的 cgroup 和 namespace 机制，将应用及其全部依赖打包到标准化的容器中运行。与虚拟机不同，容器共享宿主机内核，以进程级隔离替代硬件级隔离，实现秒级启动、MB 级镜像和接近原生的运行性能。

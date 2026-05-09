@@ -4,6 +4,8 @@ tags: [linux, shell, bash, 文本处理, vim]
 sources: [[sources/Linux系统学习]]
 ---
 
+Shell 编程使用 Bash 等 Shell 解释器编写脚本，通过组合系统命令、流程控制和文本处理工具实现系统管理自动化。核心内容包括重定向与管道、Bash 脚本语法（变量/条件/循环/函数/数组）、正则表达式，以及 grep、sed、awk 文本处理三剑客。Vim 编辑器是 Linux 下最强大的终端文本编辑工具。
+
 ## 定义
 
 Shell 编程是指使用 Bash 等 Shell 解释器编写脚本，通过组合系统命令、流程控制和文本处理工具，实现系统管理自动化和数据处理。Bash（Bourne Again Shell）是 Linux 最广泛使用的 Shell，既是交互式命令行界面，也是脚本编程语言。

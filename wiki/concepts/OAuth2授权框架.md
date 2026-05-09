@@ -4,6 +4,8 @@ tags: [oauth, 认证授权, 安全, Spring]
 sources: [[sources/OAuth2与OpenIDConnect]], [[sources/OAuth2官方规范索引]]
 ---
 
+OAuth2（RFC 6749）是行业标准的授权协议，核心思想是"令牌替代密码"，允许第三方应用在用户不暴露密码的情况下获取有限的资源访问权限。涵盖四种角色、多种授权流程（授权码/PKCE/客户端凭证/设备授权）、JWT 令牌体系、OpenID Connect 身份认证层，以及 OAuth 2.1 的安全演进和 Spring Authorization Server 实践。
+
 ## 定义
 
 OAuth2（Open Authorization 2.0，RFC 6749）是一个行业标准的授权协议，允许第三方应用在资源所有者（用户）不暴露密码的情况下，获取有限的访问权限来访问其受保护的资源。核心思想是「令牌替代密码」：用户通过授权服务器授权，第三方应用只获得有限期的访问令牌，且用户可随时撤销。

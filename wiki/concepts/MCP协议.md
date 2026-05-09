@@ -4,6 +4,8 @@ tags: [MCP, AI工具, 协议, 扩展]
 sources: [[sources/AI编程工具研究]]
 ---
 
+MCP（Model Context Protocol）是由 Anthropic 发起的 AI 工具标准扩展协议，为 AI 模型提供统一的工具注册、资源管理和数据接入接口。协议定义了 Tools、Resources、Prompts 三种核心能力，支持 stdio 和 HTTP/SSE 两种传输方式，并通过 Sampling 机制允许服务器反向请求 AI 推理能力。
+
 ## 定义
 
 Model Context Protocol（MCP），AI 工具的标准扩展协议。由 [[Anthropic]] 发起，旨在为 AI 模型提供统一的工具注册、资源管理和数据接入标准。类似于 USB 协议为硬件设备提供了统一接口，MCP 为 AI 工具提供了统一的外部连接方式。

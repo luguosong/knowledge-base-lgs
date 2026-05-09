@@ -5,6 +5,8 @@ tags: [代码托管, 开发平台, AI编程]
 sources: [[sources/AI编程工具研究]]
 ---
 
+GitHub 是全球最大的代码托管平台（2008 年创立，2018 年被 Microsoft 收购），深度投入 AI 编程辅助领域。核心 AI 产品 Copilot 系列包括 IDE 插件和终端助手 Copilot CLI，后者基于 Agentic Loop 模式运作并支持 MCP 协议扩展，是本知识库 AI 编程工具研究中的重要参与者。
+
 ## 概述
 
 GitHub 是全球最大的代码托管平台和开发者社区，2008 年创立，2018 年被 Microsoft 收购。GitHub 深度投入 AI 编程辅助领域，推出了 GitHub Copilot 系列，包括 IDE 插件和终端助手 Copilot CLI。Copilot CLI 基于 [[Agentic Loop]] 模式运作，支持 [[MCP协议]] 扩展，是 [[AI编程助手]] 领域的重要参与者。
