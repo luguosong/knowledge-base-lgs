@@ -57,21 +57,9 @@ graph TB
 
 `方式一：显式调用 DriverManager.registerDriver()`
 
-``` java title="方式一：显式注册驱动对象"
---8<-- "code/java/database/jdbc-connection/src/test/java/com/luguosong/jdbc/ConnectionTest.java:driver_register_way1"
-```
-
 `方式二：Class.forName() 反射触发静态初始化`
 
-``` java title="方式二：Class.forName 反射加载驱动"
---8<-- "code/java/database/jdbc-connection/src/test/java/com/luguosong/jdbc/ConnectionTest.java:driver_register_way2"
-```
-
 `方式三：JDBC 4.0+ SPI 自动发现（现代推荐方式）`
-
-``` java title="方式三：SPI 自动注册，无需任何显式代码"
---8<-- "code/java/database/jdbc-connection/src/test/java/com/luguosong/jdbc/ConnectionTest.java:driver_register_way3"
-```
 
 !!! note "现代项目无需手动注册"
 

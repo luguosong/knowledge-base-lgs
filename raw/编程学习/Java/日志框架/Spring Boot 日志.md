@@ -215,10 +215,6 @@ logging:
 
 当你需要开发环境和生产环境使用不同的日志策略时，`<springProfile>` 标签可以按 Spring Profile 有条件地加载配置：
 
-``` xml title="logback-spring.xml — springProfile 示例"
---8<-- "code/java/javase/logging/springboot-logging-demo/src/main/resources/logback-spring.xml"
-```
-
 `name` 属性支持多种写法：
 
 | 写法 | 含义 |
@@ -388,25 +384,5 @@ graph LR
 **结论**：在 Spring Boot 项目中，始终使用 `logback-spring.xml`。
 
 ## 📋 完整代码示例
-
-``` xml title="pom.xml"
---8<-- "code/java/javase/logging/springboot-logging-demo/pom.xml"
-```
-
-``` java title="SpringbootLoggingApplication.java"
---8<-- "code/java/javase/logging/springboot-logging-demo/src/main/java/com/luguosong/springboot/logging/SpringbootLoggingApplication.java"
-```
-
-``` yaml title="application.yml"
---8<-- "code/java/javase/logging/springboot-logging-demo/src/main/resources/application.yml"
-```
-
-``` xml title="logback-spring.xml"
---8<-- "code/java/javase/logging/springboot-logging-demo/src/main/resources/logback-spring.xml"
-```
-
-``` java title="SpringBootLoggingTest.java"
---8<-- "code/java/javase/logging/springboot-logging-demo/src/test/java/com/luguosong/springboot/logging/SpringBootLoggingTest.java"
-```
 
 项目中有完整的可运行示例，路径为 `code/java/javase/logging/springboot-logging-demo/`。

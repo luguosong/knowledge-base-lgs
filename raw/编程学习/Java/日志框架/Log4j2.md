@@ -347,14 +347,6 @@ Log4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelec
 
 完整配置示例：
 
-``` xml title="log4j2.xml 完整配置"
---8<-- "code/java/javase/logging/log4j2-demo/src/test/resources/log4j2.xml"
-```
-
 对应的 Java 代码示例：
-
-``` java title="Log4j2 基本用法"
---8<-- "code/java/javase/logging/log4j2-demo/src/test/java/com/luguosong/log4j2/Log4j2BasicTest.java"
-```
 
 项目中有完整的可运行示例，路径为 `code/java/javase/logging/log4j2-demo/`。

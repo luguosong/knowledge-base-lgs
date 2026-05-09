@@ -397,14 +397,6 @@ graph TD
 
 以下是一个生产环境常用的 `logback.xml` 完整配置，综合了本文介绍的所有组件：
 
-``` xml title="logback-test.xml 完整配置"
---8<-- "code/java/javase/logging/logback-demo/src/test/resources/logback-test.xml"
-```
-
 对应的 Java 代码示例：
-
-``` java title="Logback 基本用法" hl_lines="6-10"
---8<-- "code/java/javase/logging/logback-demo/src/test/java/com/luguosong/logback/LogbackBasicTest.java"
-```
 
 项目中有完整的可运行示例，路径为 `code/java/javase/logging/logback-demo/`。

@@ -28,15 +28,7 @@ description: JDBC ResultSet 游标遍历、按列名/索引取值、ResultSetMet
 
 ### 向前遍历（按列名取值）
 
-``` java title="next() 遍历 ResultSet，按列名获取各类型数据"
---8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/ResultSetTest.java:iterate_forward"
-```
-
 ### 按列索引取值
-
-``` java title="按列索引（1-based）与按列名两种方式对比"
---8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/ResultSetTest.java:get_by_index"
-```
 
 !!! note "按索引 vs 按列名"
 
@@ -47,17 +39,9 @@ description: JDBC ResultSet 游标遍历、按列名/索引取值、ResultSetMet
 
 ### ResultSetMetaData：在遍历中动态获取列信息
 
-``` java title="遍历结果集时同步读取列元数据"
---8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/ResultSetTest.java:result_set_metadata_in_rs"
-```
-
 ### 只能往前遍历？——可滚动 ResultSet
 
 默认 `ResultSet` 只能向前遍历（`TYPE_FORWARD_ONLY`）。通过 `createStatement` 时指定类型，可获得支持双向滚动的 `ResultSet`。
-
-``` java title="可滚动 ResultSet：last()、first()、absolute()、relative()"
---8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/ResultSetTest.java:scrollable_result_set"
-```
 
 | 导航方法 | 说明 |
 |---------|------|

@@ -132,10 +132,6 @@ JCL 只需要一个依赖：
 
 当 classpath 中只有 JCL 时，`LogFactory` 会选择 `Jdk14Logger`（适配 JUL）作为实现。这意味着默认情况下，JCL 的日志行为完全由 JUL 的配置决定：
 
-``` java title="JCL 基本用法 — 默认使用 JUL" hl_lines="5-6 9-14"
---8<-- "code/java/javase/logging/jcl-demo/src/test/java/com/luguosong/jcl/JclBasicTest.java"
-```
-
 项目中有完整的可运行示例，路径为 `code/java/javase/logging/jcl-demo/`。
 
 运行后会看到 `trace` 和 `debug` 级别的日志没有输出——这是因为 JUL 的默认级别是 `INFO`，`Jdk14Logger` 适配器遵循了这个设置。

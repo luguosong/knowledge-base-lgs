@@ -153,10 +153,6 @@ logger.info("BasicConfigurator 会自动配置一个 ConsoleAppender");
 
 ### 完整示例
 
-``` java title="Log4j 基本用法" hl_lines="6-10"
---8<-- "code/java/javase/logging/log4j-demo/src/test/java/com/luguosong/log4j/Log4jBasicTest.java"
-```
-
 项目中有完整的可运行示例，路径为 `code/java/javase/logging/log4j-demo/`。
 
 ## ⚙️ 配置详解
@@ -181,10 +177,6 @@ log4j.appender.console.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{
 ```
 
 本项目的默认配置文件：
-
-``` properties title="log4j.properties 默认配置"
---8<-- "code/java/javase/logging/log4j-demo/src/test/resources/log4j.properties"
-```
 
 ### 输出到控制台
 

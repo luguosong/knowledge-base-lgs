@@ -24,35 +24,15 @@ description: JDBC Statement 执行 SQL 语句，包括 executeQuery/executeUpdat
 
 ### 初始化测试数据
 
-``` java title="建表并插入初始数据（@BeforeEach）"
---8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/StatementTest.java:setup"
-```
-
 ## 📝 CRUD 操作实践
 
 ### 如何查询数据？——executeQuery
 
-``` java title="executeQuery 查询所有用户"
---8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/StatementTest.java:execute_query"
-```
-
 ### 如何插入数据？——executeUpdate
-
-``` java title="executeUpdate 执行 INSERT"
---8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/StatementTest.java:execute_update_insert"
-```
 
 ### 如何删除数据？——executeUpdate
 
-``` java title="executeUpdate 执行 DELETE"
---8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/StatementTest.java:execute_update_delete"
-```
-
 ### 不确定 SQL 类型怎么办？——execute 通用方法
-
-``` java title="execute() 处理 SELECT 和 UPDATE 两种情况"
---8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/StatementTest.java:execute_generic"
-```
 
 ## 🛡️ 安全与高级特性
 
@@ -62,17 +42,9 @@ description: JDBC Statement 执行 SQL 语句，包括 executeQuery/executeUpdat
 
     使用 `Statement` 拼接用户输入会导致严重的安全漏洞。攻击者可通过精心构造的输入绕过认证、读取全表数据，甚至删除数据库。
 
-``` java title="SQL 注入风险演示——直接拼接用户输入"
---8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/StatementTest.java:sql_injection_demo"
-```
-
 ### 插入后怎么拿到自增 ID？
 
 INSERT 语句执行后，经常需要立即获取新记录的自增主键 id（例如插入订单后需要 orderId 用于后续关联）。JDBC 通过 `Statement.RETURN_GENERATED_KEYS` 标志和 `getGeneratedKeys()` 方法实现此功能。
-
-``` java title="executeUpdate 传入 RETURN_GENERATED_KEYS，插入后读取自增主键"
---8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/StatementTest.java:generated_keys"
-```
 
 !!! tip "PreparedStatement 同样支持"
 

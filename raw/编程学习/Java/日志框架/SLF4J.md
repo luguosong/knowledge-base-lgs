@@ -122,10 +122,6 @@ graph TD
 
 通过 `LoggerFactory.getLogger()` 获取 `Logger` 实例，然后调用各级别方法：
 
-``` java title="SLF4J 基本用法" hl_lines="5-6 9-13"
---8<-- "code/java/javase/logging/slf4j-demo/src/test/java/com/luguosong/slf4j/Slf4jBasicTest.java"
-```
-
 `slf4j-simple` 默认日志级别为 `INFO`，所以 `trace` 和 `debug` 级别的日志不会输出。
 
 ### 动态参数（`{}` 占位符）

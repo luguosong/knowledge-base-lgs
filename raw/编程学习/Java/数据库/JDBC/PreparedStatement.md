@@ -23,37 +23,17 @@ description: JDBC PreparedStatement 参数化查询，防 SQL 注入、预编译
 
 ### 参数化查询
 
-``` java title="PreparedStatement 带 ? 占位符查询"
---8<-- "code/java/database/jdbc-preparedstatement/src/test/java/com/luguosong/jdbc/PreparedStatementTest.java:parameterized_query"
-```
-
 ### 参数化插入
-
-``` java title="PreparedStatement 参数化插入，绑定多种类型参数"
---8<-- "code/java/database/jdbc-preparedstatement/src/test/java/com/luguosong/jdbc/PreparedStatementTest.java:parameterized_insert"
-```
 
 ### 参数化更新
 
-``` java title="PreparedStatement 参数化 UPDATE"
---8<-- "code/java/database/jdbc-preparedstatement/src/test/java/com/luguosong/jdbc/PreparedStatementTest.java:parameterized_update"
-```
-
 ### 防 SQL 注入对比验证
-
-``` java title="Statement 注入成功 vs PreparedStatement 注入失败"
---8<-- "code/java/database/jdbc-preparedstatement/src/test/java/com/luguosong/jdbc/PreparedStatementTest.java:prevent_sql_injection"
-```
 
 ## ⚡ 预编译复用与大字段
 
 ### 同一条 SQL 要执行多次怎么办？——预编译复用
 
 同一个 `PreparedStatement` 对象可通过重新绑定参数多次执行，SQL 只编译一次。
-
-``` java title="复用同一 PreparedStatement 对象执行多次查询"
---8<-- "code/java/database/jdbc-preparedstatement/src/test/java/com/luguosong/jdbc/PreparedStatementTest.java:reuse_prepared_statement"
-```
 
 ### 怎样在数据库存储文件？——Blob 大字段读写
 
@@ -65,10 +45,6 @@ description: JDBC PreparedStatement 参数化查询，防 SQL 注入、预编译
 | `setBinaryStream(int, InputStream)` | 大文件，流式写入，不占用内存 |
 | `getBytes(String)` | 读取小文件，直接返回 `byte[]` |
 | `getBinaryStream(String)` | 读取大文件，返回 `InputStream` |
-
-``` java title="PreparedStatement 写入和读取 BLOB 大字段"
---8<-- "code/java/database/jdbc-preparedstatement/src/test/java/com/luguosong/jdbc/PreparedStatementTest.java:blob_write_read"
-```
 
 !!! warning "BLOB 大小限制"
 
